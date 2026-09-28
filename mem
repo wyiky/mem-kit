@@ -1,0 +1,353 @@
+#!/usr/bin/env python3
+"""mem — 多个 AI 编码工具之间共享记忆。只读检索，不复制、不合并、不联网。
+
+第一次使用必须先配置：先问主人有哪几个工具要共享记忆，再运行 mem init。
+配置在 ~/.config/mem/config.json，别名在 ~/.config/mem/aliases.tsv，脚本本身不含任何个人信息。
+"""
+import glob, json, os, re, shutil, subprocess, sys, time
+
+H = os.path.expanduser("~")
+CONF_DIR = os.environ.get("MEM_CONFIG_DIR", f"{H}/.config/mem")
+CONF = f"{CONF_DIR}/config.json"
+ALIAS_FILE = os.environ.get("MEM_ALIASES", f"{CONF_DIR}/aliases.tsv")
+
+# 各工具的公开默认位置（来自各工具官方文档或安装目录，与具体用户无关）
+REGISTRY = {
+    "claude":   {"memory": ["~/.claude/projects/*/memory"], "instructions": "~/.claude/CLAUDE.md", "allow": "claude"},
+    "codex":    {"memory": ["~/.codex/memories"],           "instructions": "~/.codex/AGENTS.md"},
+    "zcode":    {"memory": ["~/.zcode/cli/memories/projects"], "instructions": "~/.zcode/AGENTS.md"},
+    "grok":     {"memory": ["~/.grok/memory-v2", "~/.grok/memory"], "instructions": "~/.grok/AGENTS.md", "allow": "grok"},
+    "opencode": {"memory": [],                              "instructions": "~/.config/opencode/AGENTS.md"},
+}
+
+UNCONFIGURED = """mem 尚未配置。不要自己猜要共享哪些工具。
+
+先问主人：这台机器上有哪几个 AI 工具需要共享记忆？
+  已知可选：{known}
+  其他工具也可以，用 --path 名字=记忆目录 指定。
+
+拿到回答后运行：
+  mem init --agents claude,codex,...
+"""
+
+BLOCK = """<!-- mem:begin -->
+## 跨工具共享记忆
+
+- 凡是"主人以前怎么做、怎么定的、踩过什么坑"的问题，先跑 `mem search 词`，不要直接 cat 或 Read 各工具的记忆目录。
+- 如果 `mem` 提示尚未配置：先问主人这台机器上有哪几个 AI 工具要共享记忆，拿到回答再跑 `mem init --agents ...`。不要自己猜。
+- 看命中内容用 `mem show <路径> --section '<标题>'`。大文件只给大纲，按节读。
+- 库有多大、在哪里，跑 `mem map` 现查，不要凭印象判断。
+- 怀疑索引落后于最新会话，跑 `mem recent --days 7 词`。
+- 换词两轮（中英文都试过）仍然 0 命中，就是记忆里没有，如实说，不要接着猜。
+- 记忆是线索不是事实：端口、地址、版本、文件位置这类会变的信息，用之前先核实。
+- 只写本工具自己的记忆目录，一条一个文件，写完在本库索引里加一行指针。不要改别的工具的记忆文件，有些工具会整体重生成，你写进去的会丢。
+<!-- mem:end -->"""
+
+MARK = re.compile(r"<!-- mem:begin -->.*?<!-- mem:end -->", re.S)
+
+# ---------- 基础 ----------
+
+def x(p): return os.path.expanduser(p)
+
+def sh(cmd):
+    return subprocess.run(cmd, shell=True, capture_output=True, text=True).stdout.strip()
+
+def human(n):
+    for u in ["B", "K", "M", "G"]:
+        if n < 1024: return f"{n:.0f}{u}"
+        n /= 1024
+    return f"{n:.0f}T"
+
+def du(p):
+    t = 0
+    for r, _, fs in os.walk(p):
+        for f in fs:
+            try: t += os.path.getsize(os.path.join(r, f))
+            except OSError: pass
+    return t
+
+def md_count(p):
+    return sum(1 for r, _, fs in os.walk(p) if "/.git" not in r for f in fs if f.endswith(".md"))
+
+def mtime(p):
+    try: return time.strftime("%m-%d %H:%M", time.localtime(os.path.getmtime(p)))
+    except OSError: return "-"
+
+def load_conf():
+    try: return json.load(open(CONF, encoding="utf-8"))
+    except (OSError, ValueError): return None
+
+def need_conf():
+    c = load_conf()
+    if not c or not c.get("agents"):
+        print(UNCONFIGURED.format(known=", ".join(REGISTRY)))
+        sys.exit(2)
+    return c
+
+def stores(c):
+    return {k: v for k, v in c.get("stores", {}).items() if os.path.isdir(v["path"])}
+
+def codex_root(c):
+    for v in stores(c).values():
+        if v["agent"] == "codex": return v["path"]
+    return None
+
+def load_aliases():
+    a = {}
+    try:
+        for line in open(ALIAS_FILE, encoding="utf-8"):
+            line = line.strip()
+            if not line or line.startswith("#"): continue
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                a[parts[0]] = [parts[0]] + [w for w in parts[1].split("|") if w]
+    except OSError: pass
+    return a
+
+# ---------- init：先问主人，再找目录 ----------
+
+def cmd_init(agents, extra_paths):
+    unknown = [a for a in agents if a not in REGISTRY and a not in extra_paths]
+    if unknown:
+        print(f"不认识的工具: {', '.join(unknown)}")
+        print(f"已知: {', '.join(REGISTRY)}。其他工具请用 --path 名字=记忆目录")
+        sys.exit(1)
+    conf = {"agents": agents, "stores": {}}
+    print("按主人给的名单查找记忆目录：\n")
+    for a in agents:
+        found = []
+        pats = [extra_paths[a]] if a in extra_paths else REGISTRY[a]["memory"]
+        for pat in pats:
+            for p in sorted(glob.glob(x(pat))):
+                if os.path.isdir(p) and md_count(p) > 0: found.append(p)
+        if not found:
+            print(f"  {a:9} 没有记忆目录（只参与读取别人的记忆）")
+            continue
+        for p in found:
+            label = a
+            if a == "claude":
+                label = "claude:" + os.path.basename(os.path.dirname(p)).split("-")[-1][:16]
+            k, i = label, 2
+            while k in conf["stores"]: k, i = f"{label}{i}", i + 1
+            conf["stores"][k] = {"agent": a, "path": p}
+            print(f"  {a:9} {md_count(p):>5} 个 md  {human(du(p)):>6}  {p}")
+    os.makedirs(CONF_DIR, exist_ok=True)
+    json.dump(conf, open(CONF, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print(f"\n已写入 {CONF}")
+    print("请把上面的清单给主人过目。确认无误后：")
+    print("  mem install          预览会改动哪些文件")
+    print("  mem install --apply  真正写入")
+
+# ---------- install：把指令写进各工具 ----------
+
+def cmd_install(apply):
+    c = need_conf()
+    tag = "[改]" if apply else "[预演]"
+    if not shutil.which("mem"):
+        print("注意：mem 不在 PATH 上，各工具会找不到它。先把本脚本放进 PATH 里的某个目录。\n")
+    print("=== 指令块（mem:begin/end 之间，重跑只替换不重复）===")
+    for a in c["agents"]:
+        f = REGISTRY.get(a, {}).get("instructions")
+        if not f:
+            print(f"  {tag} {a}: 未知指令文件位置，请手动把指令块加进它的全局指令文件"); continue
+        p = x(f)
+        old = open(p, encoding="utf-8").read() if os.path.exists(p) else None
+        if old is None:          new, what = BLOCK + "\n", "新建"
+        elif MARK.search(old):   new, what = MARK.sub(BLOCK, old), "替换已有指令块"
+        else:                    new, what = old.rstrip("\n") + "\n\n" + BLOCK + "\n", "追加（原有内容不动）"
+        print(f"  {tag} {f}  {what}")
+        if apply:
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w", encoding="utf-8").write(new)
+    print("\n=== 命令白名单 ===")
+    for a in c["agents"]:
+        kind = REGISTRY.get(a, {}).get("allow")
+        if kind == "claude":
+            p = x("~/.claude/settings.json")
+            d = json.load(open(p)) if os.path.exists(p) else {}
+            al = d.setdefault("permissions", {}).setdefault("allow", [])
+            if "Bash(mem:*)" in al: print("  claude 已有 Bash(mem:*)"); continue
+            print(f"  {tag} ~/.claude/settings.json 加 Bash(mem:*)")
+            if apply:
+                al.append("Bash(mem:*)")
+                json.dump(d, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+        elif kind == "grok":
+            p = x("~/.grok/config.toml")
+            s = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
+            if "Bash(mem" in s: print("  grok 已有 mem 白名单"); continue
+            if re.search(r"^\[permission\]", s, re.M):
+                print("  grok 的 config.toml 已有 [permission] 段，请手动把 \"Bash(mem *)\" 加进 allow"); continue
+            print(f"  {tag} ~/.grok/config.toml 加 [permission] allow = [\"Bash(mem *)\"]")
+            if apply:
+                open(p, "a", encoding="utf-8").write('\n[permission]\nallow = ["Bash(mem *)"]\n')
+        else:
+            print(f"  {a:9} 审批行为取决于它自己的设置。第一次调用 mem 若弹窗，选“总是允许”")
+    if not apply: print("\n以上均未执行。确认后加 --apply。")
+
+# ---------- 检索 ----------
+
+def cmd_map():
+    c = need_conf()
+    print(f"共享名单: {', '.join(c['agents'])}")
+    print("记忆库现状（本次运行实测，不是记录值）\n")
+    for k, v in stores(c).items():
+        print(f"  {k:14} {human(du(v['path'])):>6}  {md_count(v['path']):>5} 个 md   {v['path']}")
+    cx = codex_root(c)
+    if cx:
+        print()
+        for f in ["memory_summary.md", "MEMORY.md", "raw_memories.md"]:
+            p = f"{cx}/{f}"
+            if os.path.exists(p):
+                n = sum(1 for _ in open(p, encoding="utf-8", errors="ignore"))
+                print(f"  codex/{f:20} {n:>6} 行  {human(os.path.getsize(p)):>6}  改于 {mtime(p)}")
+        rs = f"{cx}/rollout_summaries"
+        if os.path.isdir(rs) and os.listdir(rs):
+            newest = max(os.listdir(rs), key=lambda f: os.path.getmtime(os.path.join(rs, f)))
+            ok = os.path.getmtime(f"{cx}/MEMORY.md") >= os.path.getmtime(os.path.join(rs, newest))
+            print("  → codex 索引" + ("已覆盖最新会话" if ok else "早于最新会话，可能落后，用 mem recent 补查"))
+
+def expand(words, aliases):
+    out = []
+    for w in words:
+        out.append(w)
+        for k, vs in aliases.items():
+            if w.lower() == k.lower() or w in vs: out += vs
+    seen, res = set(), []
+    for w in out:
+        if w.lower() not in seen: seen.add(w.lower()); res.append(w)
+    return res
+
+def rg(pat, path, extra=""):
+    if not os.path.exists(path): return []
+    r = sh(f"rg -n -H -i --no-heading -m 3 {extra} -e {pat!r} '{path}' 2>/dev/null | head -40")
+    return [l for l in r.split("\n") if l.strip()]
+
+def title_of(p):
+    try:
+        for l in open(p, encoding="utf-8", errors="ignore"):
+            if l.startswith("#"): return l.lstrip("# ").strip()[:60]
+            if l.startswith("description:"): return l[12:].strip()[:60]
+    except OSError: pass
+    return ""
+
+def cmd_search(words, raw=False, deep=False):
+    c = need_conf()
+    pats = expand(words, load_aliases())
+    pat = "|".join(re.escape(w) for w in pats)
+    print(f"查询: {' '.join(words)}   展开为 {len(pats)} 个词: {', '.join(pats[:8])}\n")
+    st, cx = stores(c), codex_root(c)
+    idx = "-g 'MEMORY.md' -g 'memory_summary.md'"
+    layers = [
+        ("L0 索引", [v["path"] for v in st.values()], idx),
+        ("L1 条目", [v["path"] for v in st.values() if v["agent"] != "codex"],
+                    "-g '*.md' -g '!MEMORY.md' -g '!memory_summary.md'"),
+    ]
+    if cx:
+        layers.append(("L2 会话", [f"{cx}/rollout_summaries"], "-g '*.md'"))
+        if raw:  layers.append(("L3 原始", [f"{cx}/raw_memories.md"], ""))
+        if deep: layers.append(("L4 证据", [f"{cx}/extensions"], "-g '*.md'"))
+    total = 0
+    for label, paths, extra in layers:
+        hits = []
+        for p in paths: hits += rg(pat, p, extra)
+        if not hits: print(f"{label}: 0 命中"); continue
+        files = {}
+        for h in hits:
+            parts = h.split(":", 2)
+            if len(parts) == 3: files.setdefault(parts[0], []).append((parts[1], parts[2]))
+        print(f"{label}: {len(hits)} 行命中，{len(files)} 个文件")
+        for f, ls in list(files.items())[:6]:
+            print(f"  {os.path.relpath(f, H)}  ({human(os.path.getsize(f))})")
+            t = title_of(f)
+            if t: print(f"     标题: {t}")
+            print(f"     :{ls[0][0]}  {ls[0][1].strip()[:110]}")
+        total += len(hits)
+        print()
+    if total == 0:
+        print("全层 0 命中。换一个近义词或英文词再搜一次；第二轮仍为 0，就是记忆里没有，如实说明。")
+    else:
+        print(f"共 {total} 行命中。下一步: mem show <路径> --section '<标题>'")
+        if cx and not raw:  print("  需要当时原话:  加 --raw")
+        if cx and not deep: print("  需要活动流证据: 加 --deep")
+
+def cmd_show(path, section=None):
+    c = need_conf()
+    cands = [path, os.path.join(H, path)] + [os.path.join(v["path"], path) for v in stores(c).values()]
+    p = next((q for q in cands if os.path.isfile(q)), None)
+    if not p:
+        print(f"找不到: {path}\n提示: 索引里的指针可能是相对于某个记忆库根目录的路径"); return
+    size = os.path.getsize(p)
+    if size > 40000 and not section:
+        print(f"{p}  {human(size)} 过大，只给大纲。用 --section '标题' 读某一节。\n")
+        for i, l in enumerate(open(p, encoding="utf-8", errors="ignore"), 1):
+            if l.startswith("#"): print(f"  {i:>6}  {l.rstrip()[:100]}")
+        return
+    lines = open(p, encoding="utf-8", errors="ignore").read().split("\n")
+    if section:
+        out, on = [], False
+        for l in lines:
+            if l.startswith("#"):
+                if on: break
+                if section.lower() in l.lower(): on = True
+            if on: out.append(l)
+        lines = out or [f"（未找到含 '{section}' 的小节）"]
+    print("\n".join(lines[:200]))
+
+def cmd_recent(days=7, word=None):
+    c = need_conf()
+    print(f"最近 {days} 天改动过的记忆文件\n")
+    for k, v in stores(c).items():
+        q = f" -exec grep -l {word!r} {{}} +" if word else ""
+        r = sh(f"find '{v['path']}' -name '*.md' -not -path '*/.git/*' -mtime -{days}{q} 2>/dev/null | head -12")
+        fs = [l for l in r.split("\n") if l.strip()]
+        if fs:
+            print(f"{k} ({len(fs)}):")
+            for f in fs[:8]: print(f"  {mtime(f)}  {os.path.relpath(f, H)[:78]}")
+            print()
+
+def cmd_snapshot():
+    c = need_conf()
+    done = False
+    for k, v in stores(c).items():
+        g = v["path"]
+        if not os.path.isdir(f"{g}/.git"): continue
+        done = True
+        n = sh(f"git -C '{g}' status --porcelain | wc -l").strip()
+        if n == "0":
+            print(f"{k}: 无改动。最近一次 {sh(f'git -C {g!r} log -1 --format=%ad --date=short')}"); continue
+        sh(f"git -C '{g}' add -A")
+        sh(f"git -C '{g}' commit -q -m 'mem snapshot {time.strftime('%Y-%m-%d %H:%M')}'")
+        print(f"{k}: {n} 个文件已快照 " + sh(f"git -C '{g}' log -1 --format=%h"))
+    if not done: print("没有带 git 的记忆库，无需快照。")
+
+USAGE = """用法:
+  mem init --agents a,b,c [--path 名字=目录]   先问过主人再运行
+  mem install [--apply]                        把指令写进各工具（默认只预演）
+  mem map                                      各库现状（现算）
+  mem search 词 [词2...] [--raw] [--deep]
+  mem show 路径 [--section '标题']
+  mem recent [--days N] [词]
+  mem snapshot                                 给带 git 的记忆库打快照"""
+
+if __name__ == "__main__":
+    a = sys.argv[1:]
+    if not a or a[0] in ("-h", "--help"):
+        print(__doc__); print(USAGE); sys.exit(0)
+    cmd, rest = a[0], a[1:]
+    flag = lambda k: rest[rest.index(k) + 1] if k in rest and rest.index(k) + 1 < len(rest) else None
+    words = [w for i, w in enumerate(rest) if not w.startswith("--") and (i == 0 or not rest[i-1].startswith("--"))]
+    if cmd == "init":
+        ag = flag("--agents")
+        if not ag: print(UNCONFIGURED.format(known=", ".join(REGISTRY))); sys.exit(2)
+        extra = {}
+        for i, w in enumerate(rest):
+            if w == "--path" and i + 1 < len(rest) and "=" in rest[i+1]:
+                k, v = rest[i+1].split("=", 1); extra[k] = v
+        cmd_init([s.strip() for s in ag.split(",") if s.strip()], extra)
+    elif cmd == "install":  cmd_install("--apply" in rest)
+    elif cmd == "map":      cmd_map()
+    elif cmd == "search":   cmd_search(words, "--raw" in rest, "--deep" in rest)
+    elif cmd == "show":     cmd_show(rest[0], flag("--section")) if rest else print(USAGE)
+    elif cmd == "recent":   cmd_recent(int(flag("--days") or 7), words[0] if words else None)
+    elif cmd == "snapshot": cmd_snapshot()
+    else: print(f"未知子命令: {cmd}\n{USAGE}")
