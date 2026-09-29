@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="528" viewBox="0 0 980 528">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1020"/><stop offset="1" stop-color="#141B34"/></linearGradient>
+  <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+</defs>
+<style>
+.l{opacity:0;animation:cyc 16.0s linear infinite}
+text{white-space:pre}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace;font-size:15px}
+@keyframes caret{0%,49%{opacity:1}50%,100%{opacity:0}}
+.caret{animation:caret 1s steps(1) infinite}
+@keyframes a0{0%,18.12%{opacity:0}19.06%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k0{animation-name:a0}@keyframes a1{0%,23.75%{opacity:0}24.69%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k1{animation-name:a1}@keyframes a2{0%,29.38%{opacity:0}30.31%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k2{animation-name:a2}@keyframes a3{0%,30.75%{opacity:0}31.69%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k3{animation-name:a3}@keyframes a4{0%,31.06%{opacity:0}32.00%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k4{animation-name:a4}@keyframes a5{0%,32.44%{opacity:0}33.38%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k5{animation-name:a5}@keyframes a6{0%,33.81%{opacity:0}34.75%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k6{animation-name:a6}@keyframes a7{0%,35.19%{opacity:0}36.12%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k7{animation-name:a7}@keyframes a8{0%,36.56%{opacity:0}37.50%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k8{animation-name:a8}@keyframes a9{0%,37.94%{opacity:0}38.87%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k9{animation-name:a9}@keyframes a10{0%,39.31%{opacity:0}40.25%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k10{animation-name:a10}@keyframes a11{0%,40.69%{opacity:0}41.62%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k11{animation-name:a11}@keyframes a12{0%,42.06%{opacity:0}43.00%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k12{animation-name:a12}@keyframes a13{0%,42.37%{opacity:0}43.31%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k13{animation-name:a13}@keyframes a14{0%,48.00%{opacity:0}48.94%,92.50%{opacity:1}96.25%,100%{opacity:0}}.k14{animation-name:a14}@keyframes type{0%,2.50%{width:0}15.00%,96.25%{width:592px}100%{width:0}}#tp{animation:type 16.0s steps(48) infinite}</style>
+<rect width="980" height="528" rx="14" fill="#0D1224"/>
+<rect x="0.5" y="0.5" width="979" height="527" rx="14" fill="none" stroke="#FFFFFF" stroke-opacity="0.1"/>
+<path d="M14 0.5 H966 a13.5 13.5 0 0 1 13.5 13.5 V40 H0.5 V14 a13.5 13.5 0 0 1 13.5 -13.5z" fill="#161D36"/>
+<circle cx="24" cy="20" r="6" fill="#FF5F57"/><circle cx="44" cy="20" r="6" fill="#FEBC2E"/><circle cx="64" cy="20" r="6" fill="#28C840"/>
+<text x="490.0" y="25" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="13" fill="#5E6789">claude — ~/projects/shop-api</text>
+<rect x="0" y="40" width="980" height="2" fill="url(#acc)" opacity="0.6"/>
+<rect x="22" y="64" width="936" height="38" rx="8" fill="#FFFFFF" fill-opacity="0.04" stroke="#FFFFFF" stroke-opacity="0.12"/>
+<clipPath id="cp"><rect id="tp" x="36" y="64" width="0" height="38"/></clipPath>
+<text class="m" x="36" y="88" fill="#22D3EE">&gt;</text>
+<g clip-path="url(#cp)"><text class="m" x="56" y="88" fill="#E6E9F5">Remember how we rolled back the payment service?</text></g>
+<text class="l k0 m" x="36" y="140" fill="#E6E9F5"><tspan fill="#22D3EE">⏺</tspan> Let me check every agent's memory.</text>
+<text class="l k1 m" x="36" y="164" fill="#22D3EE">  $ mem search rollback payment</text>
+<text class="l k2 m" x="36" y="188" fill="#9AA3C0">  Query: rollback payment   expanded to 2 terms: rollback, payment</text>
+<text class="l k4 m" x="36" y="236" fill="#A78BFA" font-weight="600">  L0 index: 2 lines in 2 files</text>
+<text class="l k5 m" x="36" y="260" fill="#E6E9F5">    .codex/memories/MEMORY.md</text>
+<g class="l k5"><rect x="830" y="244" width="104" height="22" rx="11" fill="#6EE7B7" fill-opacity="0.16" stroke="#6EE7B7" stroke-opacity="0.6"/><text x="882" y="260" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="12.5" fill="#6EE7B7">Codex</text></g>
+<text class="l k6 m" x="36" y="284" fill="#9AA3C0">       :88  payment-svc rollback: redeploy previous tag, flush queue</text>
+<text class="l k7 m" x="36" y="308" fill="#A78BFA" font-weight="600">  L1 entries: 3 lines in 2 files</text>
+<text class="l k8 m" x="36" y="332" fill="#E6E9F5">    .grok/memory-v2/.../topics/deploy.md</text>
+<g class="l k8"><rect x="830" y="316" width="104" height="22" rx="11" fill="#F9A8D4" fill-opacity="0.16" stroke="#F9A8D4" stroke-opacity="0.6"/><text x="882" y="332" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="12.5" fill="#F9A8D4">Grok</text></g>
+<text class="l k9 m" x="36" y="356" fill="#9AA3C0">       title: Deploy checklist</text>
+<text class="l k10 m" x="36" y="380" fill="#A78BFA" font-weight="600">  L2 sessions: 1 lines in 1 files</text>
+<text class="l k11 m" x="36" y="404" fill="#E6E9F5">    .codex/memories/rollout_summaries/2026-08-14-hotfix.md</text>
+<g class="l k11"><rect x="830" y="388" width="104" height="22" rx="11" fill="#6EE7B7" fill-opacity="0.16" stroke="#6EE7B7" stroke-opacity="0.6"/><text x="882" y="404" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="12.5" fill="#6EE7B7">Codex</text></g>
+<text class="l k13 m" x="36" y="452" fill="#E6E9F5"><tspan fill="#22D3EE">⏺</tspan> Found it in Codex's notes from Aug 14: redeploy the previous tag,</text>
+<text class="l k14 m" x="36" y="476" fill="#E6E9F5">  then flush the job queue. Grok's deploy checklist agrees. Run it?</text>
+</svg>

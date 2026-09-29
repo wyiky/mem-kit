@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1020"/><stop offset="1" stop-color="#141B34"/></linearGradient>
+  <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+</defs>
+<rect width="1280" height="640" fill="url(#bg)"/><rect width="1280" height="640" fill="url(#dots)"/>
+<circle cx="1060" cy="300" r="330" fill="url(#glow)"/>
+<circle cx="1030" cy="300" r="196.51999999999998" fill="url(#glow)"/>
+<line x1="1030" y1="300" x2="1030" y2="184.4" stroke="#A78BFA" stroke-width="7.48" stroke-opacity="0.6"/>
+<line x1="1030" y1="300" x2="1145.6" y2="300" stroke="#A78BFA" stroke-width="7.48" stroke-opacity="0.6"/>
+<line x1="1030" y1="300" x2="1030" y2="415.6" stroke="#A78BFA" stroke-width="7.48" stroke-opacity="0.6"/>
+<line x1="1030" y1="300" x2="914.4" y2="300" stroke="#A78BFA" stroke-width="7.48" stroke-opacity="0.6"/>
+<circle cx="1030" cy="300" r="51.0" fill="#0B1020" stroke="url(#acc)" stroke-width="13.6"/>
+<circle cx="1030" cy="300" r="17.0" fill="url(#acc)"/>
+<circle cx="1030" cy="184.4" r="27.2" fill="#F0A07C"/>
+<circle cx="1145.6" cy="300" r="27.2" fill="#6EE7B7"/>
+<circle cx="1030" cy="415.6" r="27.2" fill="#93C5FD"/>
+<circle cx="914.4" cy="300" r="27.2" fill="#F9A8D4"/>
+<text x="116" y="230" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="132" font-weight="800" fill="#E6E9F5" letter-spacing="-3">mem</text>
+<rect x="124" y="256" width="170" height="8" rx="4" fill="url(#acc)"/>
+<text x="120" y="330" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="36" font-weight="600" fill="#E6E9F5">Just ask. Your AI agents remember together.</text>
+<text x="120" y="385" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="30" fill="#9AA3C0">直接问，AI 自己去翻所有工具的记忆</text>
+<g transform="translate(120,470)"><rect width="164" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#F0A07C" stroke-opacity="0.6"/><circle cx="24" cy="22" r="6" fill="#F0A07C"/><text x="40" y="28.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="18" fill="#E6E9F5">Claude Code</text></g><g transform="translate(300,470)"><rect width="164" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#6EE7B7" stroke-opacity="0.6"/><circle cx="24" cy="22" r="6" fill="#6EE7B7"/><text x="40" y="28.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="18" fill="#E6E9F5">Codex</text></g><g transform="translate(480,470)"><rect width="164" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#93C5FD" stroke-opacity="0.6"/><circle cx="24" cy="22" r="6" fill="#93C5FD"/><text x="40" y="28.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="18" fill="#E6E9F5">ZCode</text></g><g transform="translate(660,470)"><rect width="164" height="44" rx="22" fill="#FFFFFF" fill-opacity="0.06" stroke="#F9A8D4" stroke-opacity="0.6"/><circle cx="24" cy="22" r="6" fill="#F9A8D4"/><text x="40" y="28.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="18" fill="#E6E9F5">Grok</text></g>
+<text x="120" y="580" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="20" fill="#5E6789">github.com/wyiky/mem-kit</text>
+</svg>

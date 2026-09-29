@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="460" viewBox="0 0 1280 460">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1020"/><stop offset="1" stop-color="#141B34"/></linearGradient>
+  <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+</defs>
+<rect width="1280" height="460" rx="24" fill="url(#bg)"/><rect width="1280" height="460" rx="24" fill="url(#dots)"/>
+<circle cx="1180" cy="-40" r="300" fill="url(#glow)"/>
+<circle cx="128" cy="128" r="78.03" fill="url(#glow)"/>
+<line x1="128" y1="128" x2="128" y2="82.1" stroke="#A78BFA" stroke-width="2.9700000000000006" stroke-opacity="0.6"/>
+<line x1="128" y1="128" x2="173.9" y2="128" stroke="#A78BFA" stroke-width="2.9700000000000006" stroke-opacity="0.6"/>
+<line x1="128" y1="128" x2="128" y2="173.9" stroke="#A78BFA" stroke-width="2.9700000000000006" stroke-opacity="0.6"/>
+<line x1="128" y1="128" x2="82.1" y2="128" stroke="#A78BFA" stroke-width="2.9700000000000006" stroke-opacity="0.6"/>
+<circle cx="128" cy="128" r="20.25" fill="#0B1020" stroke="url(#acc)" stroke-width="5.4"/>
+<circle cx="128" cy="128" r="6.75" fill="url(#acc)"/>
+<circle cx="128" cy="82.1" r="10.8" fill="#F0A07C"/>
+<circle cx="173.9" cy="128" r="10.8" fill="#6EE7B7"/>
+<circle cx="128" cy="173.9" r="10.8" fill="#93C5FD"/>
+<circle cx="82.1" cy="128" r="10.8" fill="#F9A8D4"/>
+<text x="232" y="152" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="92" font-weight="800" fill="#E6E9F5" letter-spacing="-2">mem</text>
+<rect x="238" y="172" width="112" height="6" rx="3" fill="url(#acc)"/>
+<text x="64" y="262" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="34" font-weight="700" fill="#E6E9F5">Just ask. No commands.</text>
+<text x="64" y="304" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="20" fill="#9AA3C0">Your agent searches Claude Code, Codex, ZCode and Grok memory.</text>
+<text x="1216" y="58" text-anchor="end" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#9AA3C0" letter-spacing="2">JUST SAY</text>
+<path d="M813.1999999999999 76 H1202 a14 14 0 0 1 14 14 V106 a14 14 0 0 1 -14 14 H1210 l8 9 l-22 -9 H813.1999999999999 a14 14 0 0 1 -14 -14 V90 a14 14 0 0 1 14 -14z" fill="#22D3EE" fill-opacity="0.10" stroke="#22D3EE" stroke-opacity="0.45"/><text x="817.1999999999999" y="104" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="17" fill="#E6E9F5">Remember our chat about the payment bug?</text>
+<path d="M841.76 140 H1202 a14 14 0 0 1 14 14 V170 a14 14 0 0 1 -14 14 H1210 l8 9 l-22 -9 H841.76 a14 14 0 0 1 -14 -14 V154 a14 14 0 0 1 14 -14z" fill="#22D3EE" fill-opacity="0.10" stroke="#22D3EE" stroke-opacity="0.45"/><text x="845.76" y="168" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="17" fill="#E6E9F5">Go check Codex for the rollback plan.</text>
+<path d="M822.72 204 H1202 a14 14 0 0 1 14 14 V234 a14 14 0 0 1 -14 14 H1210 l8 9 l-22 -9 H822.72 a14 14 0 0 1 -14 -14 V218 a14 14 0 0 1 14 -14z" fill="#22D3EE" fill-opacity="0.10" stroke="#22D3EE" stroke-opacity="0.45"/><text x="826.72" y="232" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="17" fill="#E6E9F5">Go look in ZCode for the deploy script.</text>
+<text x="1216" y="294" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="14" fill="#22D3EE">⏺ mem search deploy script --agent zcode → 2 hits</text>
+<rect x="64" y="350" width="368" height="60" rx="16" fill="#FFFFFF" fill-opacity="0.05" stroke="#22D3EE" stroke-opacity="0.55"/>
+<circle cx="92" cy="380" r="6" fill="#22D3EE"/>
+<text x="110" y="387" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#E6E9F5">No commands<tspan font-weight="400" fill="#9AA3C0" dx="10">just talk</tspan></text>
+<rect x="452" y="350" width="368" height="60" rx="16" fill="#FFFFFF" fill-opacity="0.05" stroke="#8FB2FB" stroke-opacity="0.55"/>
+<circle cx="480" cy="380" r="6" fill="#8FB2FB"/>
+<text x="498" y="387" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#E6E9F5">No new store<tspan font-weight="400" fill="#9AA3C0" dx="10">nothing to move</tspan></text>
+<rect x="840" y="350" width="368" height="60" rx="16" fill="#FFFFFF" fill-opacity="0.05" stroke="#A78BFA" stroke-opacity="0.55"/>
+<circle cx="868" cy="380" r="6" fill="#A78BFA"/>
+<text x="886" y="387" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#E6E9F5">No sync<tspan font-weight="400" fill="#9AA3C0" dx="10">shared in place</tspan></text>
+</svg>

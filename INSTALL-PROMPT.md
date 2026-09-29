@@ -1,53 +1,56 @@
-# 让 AI 帮你安装 mem
+# Install mem by asking your AI
 
-把下面分隔线之间的整段文字复制下来，发给你常用的任意一个 AI 编码工具（Claude Code、Codex、ZCode、Grok 都可以）。
+Copy everything between the two lines below and paste it into any AI coding agent you use: Claude Code, Codex, ZCode, Grok, or any other.
 
-发之前把第一行的 `【这里填路径】` 换成 mem-kit 文件夹的实际位置。不知道路径的话，把文件夹直接拖进终端窗口，路径就会自动出现。
+If you already downloaded mem-kit, replace `[optional: local path]` with the folder's path (drag the folder into a terminal window to get it). Otherwise leave it as is, and the agent will download mem from GitHub.
+
+> 中文版：[INSTALL-PROMPT.zh-CN.md](INSTALL-PROMPT.zh-CN.md)
 
 ---
 
-请帮我安装 mem。安装包在：【这里填路径】
+Please install mem for me. Local copy: [optional: local path]. Project: https://github.com/wyiky/mem-kit
 
-mem 是一个只读的命令行小工具，用来让我电脑上的几个 AI 编码工具互相检索对方的记忆。安装包里有两个文件：`mem`（Python 脚本）和 `README.md`（说明）。请先读一遍 README.md，然后按下面的步骤做。**每到标着「停下」的地方，都先问我、等我回答，不要替我决定。**
+mem is a small read-only command-line tool that lets the AI coding agents on my machine search each other's memory. Read the project README first (the local `README.md`, or https://github.com/wyiky/mem-kit), then follow the steps below. **Wherever a step says STOP, ask me and wait for my answer. Do not decide for me.**
 
-**第 1 步：检查环境**
-- 运行 `python3 --version`，要求 3.8 或以上。
-- 运行 `rg --version`，检查 ripgrep 装没装。
-- 两样都有，直接进第 2 步。缺哪样就告诉我缺什么，并给出适合我系统的安装命令。**停下**，等我同意后再装。
+**Step 1: Check the environment**
+- Run `python3 --version`. Needs 3.8 or later.
+- Run `rg --version` to check for ripgrep.
+- If both are present, go to step 2. If something is missing, tell me what and give me the install command for my system. **STOP** and wait for my OK before installing.
 
-**第 2 步：问我要共享哪几个工具**
-- **停下**，问我：「这台电脑上有哪几个 AI 工具需要共享记忆？」
-- 可以顺带告诉我你在默认位置看到了哪些工具的目录，比如 `~/.claude`、`~/.codex`、`~/.zcode`、`~/.grok`、`~/.config/opencode`，当作参考，但名单由我定。
-- mem 内置认识的名字有 `claude`、`codex`、`zcode`、`grok`、`opencode`。我说的工具不在里面，就问我它的记忆目录在哪里。
+**Step 2: Ask which agents to share**
+- **STOP** and ask me: "Which AI agents on this machine should share memory?"
+- You may mention which agent folders you can see (`~/.claude`, `~/.codex`, `~/.zcode`, `~/.grok`, `~/.config/opencode`) as a hint, but I make the list.
+- Built-in names: `claude`, `codex`, `zcode`, `grok`, `opencode`. If I name an agent that isn't built in, ask me where its memory folder is.
 
-**第 3 步：把 mem 放进 PATH**
-- 运行 `mkdir -p ~/bin && install -m 755 【安装包路径】/mem ~/bin/mem`。
-- 运行 `command -v mem`，确认能找到。
-- 如果找不到，说明 `~/bin` 不在 PATH 里，需要在 `~/.zshrc`（macOS）或 `~/.bashrc`（Linux）末尾加一行 `export PATH="$HOME/bin:$PATH"`。**停下**，告诉我要改哪个文件、加哪一行，等我同意后再改。
+**Step 3: Put mem on PATH**
+- With a local copy: `mkdir -p ~/bin && install -m 755 [local path]/mem ~/bin/mem`
+- Without one: `mkdir -p ~/bin && curl -fsSL https://raw.githubusercontent.com/wyiky/mem-kit/main/mem -o ~/bin/mem && chmod +x ~/bin/mem`
+- Run `command -v mem` to confirm it's found.
+- If it isn't, `~/bin` is not on PATH. The fix is one line, `export PATH="$HOME/bin:$PATH"`, at the end of `~/.zshrc` (macOS) or `~/.bashrc` (Linux). **STOP**, tell me which file and which line, and wait for my OK.
 
-**第 4 步：登记名单**
-- 按我在第 2 步给的名单运行 `mem init --agents 工具1,工具2,...`。名单外的工具用 `--path 名字=记忆目录` 补上。
-- 把它列出来的清单原样给我看：每个工具找到了几个文件、多大、在哪个目录。显示「没有记忆目录」的工具不算出错，它只是只读别人的记忆，不贡献自己的。
-- **停下**，问我清单对不对。
+**Step 4: Register the list**
+- Run `mem init --agents agent1,agent2,...` with the list from step 2. Add `--path name=memory_dir` for agents that aren't built in.
+- Show me the result as-is: how many files each agent has, how big, and where. An agent with "no memory store" is not an error. It just reads the others.
+- **STOP** and ask me whether the list is right.
 
-**第 5 步：预览要改的文件**
-- 运行 `mem install`。这一步只是预演，什么都不会改。
-- 把输出翻译成大白话告诉我：会动哪些文件，每个文件是新建、追加还是替换；会不会给 Claude Code 或 Grok 加一条命令白名单。
-- **停下**，等我说「可以」。
+**Step 5: Preview the changes**
+- Run `mem install`. This is a dry run and changes nothing.
+- Explain the output in plain words: which files it will touch, whether each one is created, appended to or replaced, and whether it adds an allowlist entry for Claude Code or Grok.
+- **STOP** and wait for me to say go.
 
-**第 6 步：正式写入**
-- 运行 `mem install --apply`。
-- 如果输出提示某个文件需要手动处理（例如 Grok 的配置里已经有 `[permission]` 段），把要加的那一行和加的位置告诉我，**停下**，等我同意后再改。
+**Step 6: Write**
+- Run `mem install --apply`.
+- If the output says a file needs manual editing (for example, Grok's config already has a `[permission]` section), tell me the exact line to add and where. **STOP** and wait for my OK.
 
-**第 7 步：验收**
-- 运行 `mem map`，把各记忆库的现状给我看。
-- 从我的记忆里挑一个大概会出现的词，比如某个项目名，运行 `mem search 那个词`，给我看结果，证明确实能跨工具搜到。
-- 提醒我：已经开着的 AI 会话要重开一次，才会读到新写入的规则。
+**Step 7: Verify**
+- Run `mem map` and show me the stores.
+- Pick a word that's probably in my memory, such as a project name, run `mem search <that word>`, and show me the result as proof it works across agents.
+- Remind me to restart any open agent sessions so they pick up the new rules. After restarting, I can test it without any command, e.g. "Do you remember what we did about X?" or "Go check Codex for X."
 
-**全程遵守：**
-- 不要修改、移动或删除任何工具的记忆文件。mem 本身只读，你也一样。
-- 不要创建 `~/.config/mem/aliases.tsv`，除非我主动要求。
-- 不要运行需要 sudo 的命令，除非我同意。
-- 装完用三五句话总结做了什么，并告诉我怎么卸载：删掉各指令文件里 `<!-- mem:begin -->` 到 `<!-- mem:end -->` 之间的内容，再删掉 `~/bin/mem` 和 `~/.config/mem/`。
+**Throughout:**
+- Never modify, move or delete any agent's memory files. mem is read-only, and so are you.
+- Don't create `~/.config/mem/aliases.tsv` unless I ask.
+- Don't run anything with sudo unless I agree.
+- When done, summarize what you did in three to five sentences, and tell me how to uninstall: delete the content between `<!-- mem:begin -->` and `<!-- mem:end -->` in each instructions file, remove any `mem` allowlist entries, then `rm ~/bin/mem` and `rm -r ~/.config/mem`.
 
 ---

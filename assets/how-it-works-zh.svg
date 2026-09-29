@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1020"/><stop offset="1" stop-color="#141B34"/></linearGradient>
+  <linearGradient id="acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#A78BFA"/></linearGradient>
+  <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#A78BFA" stop-opacity="0.35"/><stop offset="1" stop-color="#A78BFA" stop-opacity="0"/></radialGradient>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#FFFFFF" fill-opacity="0.05"/></pattern>
+</defs>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9AA3C0"/></marker></defs>
+<rect width="1200" height="560" rx="20" fill="url(#bg)"/>
+<rect width="1200" height="560" rx="20" fill="url(#dots)"/>
+<text x="61.0" y="52" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#9AA3C0" letter-spacing="2">① 每个工具的全局指令里写一段规则</text>
+<rect x="61.0" y="72" width="250" height="74" rx="14" fill="#FFFFFF" fill-opacity="0.05" stroke="#F0A07C" stroke-opacity="0.7"/>
+<circle cx="87.0" cy="109" r="7" fill="#F0A07C"/>
+<text x="105.0" y="104" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="19" font-weight="700" fill="#E6E9F5">Claude Code</text>
+<text x="105.0" y="128" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">CLAUDE.md + mem:begin…end</text>
+<line x1="186.0" y1="148" x2="186.0" y2="244" stroke="#9AA3C0" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#ar)"/>
+<line x1="186.0" y1="312" x2="186.0" y2="400" stroke="#22D3EE" stroke-opacity="0.8" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="61.0" y="404" width="250" height="74" rx="14" fill="#0B1020" stroke="#FFFFFF" stroke-opacity="0.14"/>
+<text x="81.0" y="434" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#E6E9F5">Claude 的记忆</text>
+<text x="81.0" y="458" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">~/.claude/projects/*/memory</text>
+<rect x="337.0" y="72" width="250" height="74" rx="14" fill="#FFFFFF" fill-opacity="0.05" stroke="#6EE7B7" stroke-opacity="0.7"/>
+<circle cx="363.0" cy="109" r="7" fill="#6EE7B7"/>
+<text x="381.0" y="104" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="19" font-weight="700" fill="#E6E9F5">Codex</text>
+<text x="381.0" y="128" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">AGENTS.md + mem:begin…end</text>
+<line x1="462.0" y1="148" x2="462.0" y2="244" stroke="#9AA3C0" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#ar)"/>
+<line x1="462.0" y1="312" x2="462.0" y2="400" stroke="#22D3EE" stroke-opacity="0.8" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="337.0" y="404" width="250" height="74" rx="14" fill="#0B1020" stroke="#FFFFFF" stroke-opacity="0.14"/>
+<text x="357.0" y="434" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#E6E9F5">Codex 的记忆</text>
+<text x="357.0" y="458" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">~/.codex/memories</text>
+<rect x="613.0" y="72" width="250" height="74" rx="14" fill="#FFFFFF" fill-opacity="0.05" stroke="#93C5FD" stroke-opacity="0.7"/>
+<circle cx="639.0" cy="109" r="7" fill="#93C5FD"/>
+<text x="657.0" y="104" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="19" font-weight="700" fill="#E6E9F5">ZCode</text>
+<text x="657.0" y="128" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">AGENTS.md + mem:begin…end</text>
+<line x1="738.0" y1="148" x2="738.0" y2="244" stroke="#9AA3C0" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#ar)"/>
+<line x1="738.0" y1="312" x2="738.0" y2="400" stroke="#22D3EE" stroke-opacity="0.8" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="613.0" y="404" width="250" height="74" rx="14" fill="#0B1020" stroke="#FFFFFF" stroke-opacity="0.14"/>
+<text x="633.0" y="434" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#E6E9F5">ZCode 的记忆</text>
+<text x="633.0" y="458" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">~/.zcode/cli/memories</text>
+<rect x="889.0" y="72" width="250" height="74" rx="14" fill="#FFFFFF" fill-opacity="0.05" stroke="#F9A8D4" stroke-opacity="0.7"/>
+<circle cx="915.0" cy="109" r="7" fill="#F9A8D4"/>
+<text x="933.0" y="104" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="19" font-weight="700" fill="#E6E9F5">Grok</text>
+<text x="933.0" y="128" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">AGENTS.md + mem:begin…end</text>
+<line x1="1014.0" y1="148" x2="1014.0" y2="244" stroke="#9AA3C0" stroke-width="1.6" stroke-dasharray="5 5" marker-end="url(#ar)"/>
+<line x1="1014.0" y1="312" x2="1014.0" y2="400" stroke="#22D3EE" stroke-opacity="0.8" stroke-width="2" marker-end="url(#ar)"/>
+<rect x="889.0" y="404" width="250" height="74" rx="14" fill="#0B1020" stroke="#FFFFFF" stroke-opacity="0.14"/>
+<text x="909.0" y="434" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#E6E9F5">Grok 的记忆</text>
+<text x="909.0" y="458" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="12" fill="#9AA3C0">~/.grok/memory-v2</text>
+<text x="196.0" y="226" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="13" fill="#9AA3C0">“你还记得……吗？” → 自动 mem search</text>
+<rect x="61.0" y="250" width="1078" height="62" rx="31" fill="#0B1020" stroke="url(#acc)" stroke-width="2.5"/>
+<g transform="translate(105.0,281)"><circle cx="0" cy="0" r="24.276" fill="url(#glow)"/>
+<line x1="0" y1="0" x2="0" y2="-14.28" stroke="#A78BFA" stroke-width="0.924" stroke-opacity="0.6"/>
+<line x1="0" y1="0" x2="14.28" y2="0" stroke="#A78BFA" stroke-width="0.924" stroke-opacity="0.6"/>
+<line x1="0" y1="0" x2="0" y2="14.28" stroke="#A78BFA" stroke-width="0.924" stroke-opacity="0.6"/>
+<line x1="0" y1="0" x2="-14.28" y2="0" stroke="#A78BFA" stroke-width="0.924" stroke-opacity="0.6"/>
+<circle cx="0" cy="0" r="6.3" fill="#0B1020" stroke="url(#acc)" stroke-width="1.68"/>
+<circle cx="0" cy="0" r="2.1" fill="url(#acc)"/>
+<circle cx="0" cy="-14.28" r="3.36" fill="#F0A07C"/>
+<circle cx="14.28" cy="0" r="3.36" fill="#6EE7B7"/>
+<circle cx="0" cy="14.28" r="3.36" fill="#93C5FD"/>
+<circle cx="-14.28" cy="0" r="3.36" fill="#F9A8D4"/></g>
+<text x="145.0" y="290" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'PingFang SC','Microsoft YaHei',monospace" font-size="24" font-weight="700" fill="#E6E9F5">mem</text>
+<text x="211.0" y="288" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="16" fill="#9AA3C0">按层搜索 L0 索引 → L1 条目 → L2 会话 → --raw → --deep</text>
+<text x="61.0" y="520" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',Helvetica,Arial,sans-serif" font-size="14" font-weight="700" fill="#9AA3C0" letter-spacing="2">② 记忆留在原地：只读 grep，不复制、不合并、不上传</text>
+</svg>
