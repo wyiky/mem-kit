@@ -56,6 +56,8 @@ Claude Code、Codex、ZCode、Grok 用久了，各自都会记下你的习惯、
 
 ## 快速开始
 
+**Windows：** Claude Code 与 Codex 请看 [Windows 原生安装说明](windows/README.zh-CN.md)。下面的命令用于 macOS/Linux。
+
 ### 方式一：让 AI 帮你装（推荐）
 
 打开 [`INSTALL-PROMPT.zh-CN.md`](INSTALL-PROMPT.zh-CN.md)，把里面那段话复制给任意一个 AI 编码工具。它会检查环境，问你要共享哪几个工具，把要改的文件逐一列给你看，你同意之后才写入。大约五分钟。
@@ -159,8 +161,10 @@ mem install --apply   # 真正写入
 
 - 只做文本匹配，没有相关度排序。
 - 规则能提高 AI 主动查记忆的概率，不能保证每次都查。
-- 只支持 macOS 和 Linux。
+- 原版 `mem` 命令支持 macOS/Linux；另有面向 Claude Code 与 Codex 的 [Windows 版](windows/README.zh-CN.md)。
 
 ## 许可证
 
 [MIT](LICENSE)
+
+感谢 [@zhr2038](https://github.com/zhr2038) 贡献 Windows 原生 Claude Code / Codex 记忆互查支持（[PR #1](https://github.com/wyiky/mem-kit/pull/1)）。

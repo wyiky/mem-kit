@@ -1,5 +1,7 @@
 # 让 AI 帮你安装 mem
 
+Windows 用户请使用 [Windows 原生安装说明](windows/README.zh-CN.md)。下面的提示词使用 macOS/Linux 命令。
+
 把下面两条分隔线之间的整段文字复制下来，发给你常用的任意一个 AI 编码工具：Claude Code、Codex、ZCode、Grok 或其他都可以。
 
 如果你已经下载了 mem-kit，把 `【可选：本地路径】` 换成文件夹的实际位置（把文件夹拖进终端窗口，路径会自动出现）。没下载也没关系，保持原样，AI 会自己从 GitHub 下载。

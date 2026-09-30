@@ -1,5 +1,7 @@
 # Install mem by asking your AI
 
+Windows users: follow the [native Windows guide](windows/README.md). The prompt below uses macOS/Linux shell commands.
+
 Copy everything between the two lines below and paste it into any AI coding agent you use: Claude Code, Codex, ZCode, Grok, or any other.
 
 If you already downloaded mem-kit, replace `[optional: local path]` with the folder's path (drag the folder into a terminal window to get it). Otherwise leave it as is, and the agent will download mem from GitHub.

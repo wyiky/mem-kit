@@ -56,6 +56,8 @@ It is also told never to answer "I can't see previous conversations" when the an
 
 ## Quick start
 
+**Windows:** use the [native Windows guide](windows/README.md) for Claude Code and Codex. The commands below are for macOS/Linux.
+
 ### Option A: let your AI install it (recommended)
 
 Open [`INSTALL-PROMPT.md`](INSTALL-PROMPT.md), copy the prompt, and paste it into any AI coding agent. It checks your environment, asks which agents to share, shows you exactly which files it will touch, and waits for your OK before writing anything. About five minutes.
@@ -159,8 +161,10 @@ No memory data is touched.
 
 - Plain text matching, no relevance ranking.
 - Rules make agents more likely to check memory, not certain to.
-- macOS and Linux only.
+- The original `mem` CLI supports macOS and Linux. A separate [Windows bridge](windows/README.md) supports Claude Code and Codex on Windows.
 
 ## License
 
 [MIT](LICENSE)
+
+Thanks to [@zhr2038](https://github.com/zhr2038) for contributing native Windows Claude Code / Codex memory support ([PR #1](https://github.com/wyiky/mem-kit/pull/1)).
