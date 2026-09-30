@@ -166,3 +166,5 @@ No memory data is touched.
 ## License
 
 [MIT](LICENSE)
+
+Thanks to [@zhr2038](https://github.com/zhr2038) for contributing native Windows Claude Code / Codex memory support ([PR #1](https://github.com/wyiky/mem-kit/pull/1)).

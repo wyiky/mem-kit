@@ -166,3 +166,5 @@ mem install --apply   # 真正写入
 ## 许可证
 
 [MIT](LICENSE)
+
+感谢 [@zhr2038](https://github.com/zhr2038) 贡献 Windows 原生 Claude Code / Codex 记忆互查支持（[PR #1](https://github.com/wyiky/mem-kit/pull/1)）。

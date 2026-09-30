@@ -333,6 +333,9 @@ def do_show(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
+    # Agents capture these streams through pipes on Windows.
+    for stream in (sys.stdout, sys.stderr):
+        stream.reconfigure(encoding="utf-8", errors=stream.errors)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--version", action="version", version="mem-windows 1.0 (mem-kit concept)")
     subs = parser.add_subparsers(dest="command", required=True)

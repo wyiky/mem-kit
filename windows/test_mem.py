@@ -117,6 +117,27 @@ class MemoryBridgeTest(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertNotIn("NOT_ENROLLED", result.stdout)
 
+    def test_captured_chinese_memory_output_is_utf8(self) -> None:
+        note = self.memories / "中文记忆.md"
+        note.write_text("中文回滚方案\n", encoding="utf-8")
+        for encoding in ("cp1252", "gbk"):
+            with self.subTest(encoding=encoding):
+                self.environment["PYTHONIOENCODING"] = encoding
+                result = self.run_mem("search", "回滚", "--agent", "codex")
+                self.assertIn(note.name, result.stdout)
+                self.assertIn("中文回滚方案", result.stdout)
+                self.assertIn("中文回滚方案", self.run_mem("show", str(note)).stdout)
+
+    def test_captured_chinese_errors_are_utf8(self) -> None:
+        missing = self.root / "不存在的项目"
+        for encoding in ("cp1252", "gbk"):
+            with self.subTest(encoding=encoding):
+                self.environment["PYTHONIOENCODING"] = encoding
+                result = self.run_mem("add-project", str(missing), success=False)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn(missing.name, result.stderr)
+                self.assertNotIn("UnicodeEncodeError", result.stderr)
+
     def test_agent_selection_controls_search_and_install(self) -> None:
         self.run_mem("init", "--agents", "claude")
         self.assertNotEqual(self.run_mem("map", "--agent", "codex", success=False).returncode, 0)
